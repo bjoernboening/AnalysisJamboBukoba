@@ -10,18 +10,21 @@
 library(plyr)
 library(dplyr)
 library(car)
+library(doBy)
+library(psych)
 
 ### Set working directory, put an # in front of the ones you don't need
-setwd("C:/Users/Christopher/Google Drive/Data Animals/Jambo Bukoba/Data/") #Christopher's directory
-# XXX #Ben's directory
+#setwd("C:/Users/Christopher/Google Drive/Data Animals/Jambo Bukoba/Data/") #Christopher's directory
+# XXX #Ben's directory 
+setwd("C:/Users/Benji/Desktop/Statistics/Project/JB/Change/AnalysisJamboBukoba")
 # XXX #Dani's directory
 # XXX #Bjoern's directory
 # XXX #Laurence's directory
 
 
 ### Load CSV file
-MASTER <- read.csv("Final data/Final Data.csv", stringsAsFactors = FALSE, header = TRUE, sep=";") # Import with no header
-
+MASTER <- read.csv("Final Data.csv", stringsAsFactors = FALSE, header = TRUE, sep=";") # Import with no header
+attach(MASTER)
 
 ###############################
 # Necessary Recoding before analysis
@@ -36,17 +39,30 @@ MASTER <- read.csv("Final data/Final Data.csv", stringsAsFactors = FALSE, header
 MASTER$Schoolproject_happened[is.na(MASTER$Schoolproject_happened)] <- 0
 MASTER$SUM.WORKSHOPS[is.na(MASTER$SUM.WORKSHOPS)] <- 0
 
+
+
 # Also of course male and female to 0 and 1, 0 being female, and label
 MASTER$student_sex_binary <- recode(MASTER$student_sex, "'M'=1; 'F'=0;", as.factor.result=FALSE)
 
 
 #############################
+# Collapse Data by Identifier
+#############################
+
+collapse1 <- summaryBy(. ~ Identifier, FUN=c(mean), data=MASTER)
+
+#############################
 # Descriptive statistics
 #############################
 
-table(MASTER$Schoolproject_happened) # tab 
-table(MASTER$Schoolproject_happened, MASTER$year) #crosstab
+mytable <- table(MASTER$Schoolproject_happened) # tab 
+prop.table(mytable)
+mytable2 <- table(MASTER$Schoolproject_happened, MASTER$year) #crosstab
+prop.table(mytable2)
 mean(MASTER$Schoolproject_happened) # Mean
+
+mytable3 <- table(MASTER$student_sex_binary)
+plot(mytable3)
 
 
 #Well this is more fancy stuff. It groups the master thesis by year and summarises the number of workshops (hopefully, results not checked)
