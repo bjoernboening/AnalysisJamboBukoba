@@ -44,12 +44,15 @@ MASTER$SUM.WORKSHOPS[is.na(MASTER$SUM.WORKSHOPS)] <- 0
 # Also of course male and female to 0 and 1, 0 being female, and label
 MASTER$student_sex_binary <- recode(MASTER$student_sex, "'M'=1; 'F'=0;", as.factor.result=FALSE)
 
-
+names(MASTER)
 #############################
 # Collapse Data by Identifier
 #############################
 
-collapse1 <- summaryBy(. ~ Identifier, FUN=c(mean), data=MASTER)
+SchoolLevel <- summaryBy(. ~ Identifier, FUN=c(mean), data=MASTER)
+DistrictLevel <- summaryBy(. ~ DISTRICTNAME, FUN=c(mean), data=MASTER)
+
+table(MASTER$DISTRICTNAME)
 
 #############################
 # Descriptive statistics
@@ -63,6 +66,13 @@ mean(MASTER$Schoolproject_happened) # Mean
 
 mytable3 <- table(MASTER$student_sex_binary)
 plot(mytable3)
+
+mytable4 <- table(SUM.WORKSHOPS)
+prop.table(mytable4)
+margin.table(mytable4)
+table(SUM.WORKSHOPS)
+
+table(collapse1$SUM.WORKSHOPS)
 
 
 #Well this is more fancy stuff. It groups the master thesis by year and summarises the number of workshops (hopefully, results not checked)
