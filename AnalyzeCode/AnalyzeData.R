@@ -13,7 +13,8 @@ library(dplyr)
 library(car)
 library(doBy)
 library(psych)
-
+library(magrittr)
+library(graphics)
 ### Set working directory, put an # in front of the ones you don't need
 setwd("C:/Users/Christopher/Google Drive/Data Animals/Jambo Bukoba/Data/Final data") #Christopher's directory
 # XXX #Ben's directory 
@@ -46,8 +47,9 @@ FinalData$Bonanza_2013[is.na(FinalData$Bonanza_2013)] <- 0
 FinalData$Bonanza_2014[is.na(FinalData$Bonanza_2014)] <- 0
 FinalData$SUM.WORKSHOPS[is.na(FinalData$SUM.WORKSHOPS)] <- 0
 
-# Also of course male and female to 0 and 1, 0 being female, and label
+# Also of course male and female to 0 and 1, 0 being female
 FinalData$student_sex_binary <- recode(FinalData$student_sex, "'M'=1; 'F'=0;", as.factor.result=FALSE)
+table(FinalData$student_sex_binary)
 
 # Kagera and Geita should be in one variable
 FinalData$Region <- replace(FinalData$regionKagera, FinalData$regionKagera=="Other", "Geita")
@@ -79,13 +81,20 @@ FinalData$schoolname <- NULL
 #Show all variables in dataframe
 names(FinalData)
 
-
 ## Rename to make it easier
 names(FinalData)[names(FinalData)=="Schoolname_cleaned"] <- "Schoolname"
 names(FinalData)[names(FinalData)=="Schoolprojects_Description_.of_activities"] <- "Schoolproject_description"
 
+## Convert grades to numbers, but what does X mean?
+FinalData$english_grade_numeric <- as.numeric(recode(FinalData$english_grade, "' A'=1; ' B'=2;' C'=3;' D'=4;' E'=5;' X'=0;", as.factor.result=FALSE))
+FinalData$science_grade_numeric <- as.numeric(recode(FinalData$science_grade, "' A'=1; ' B'=2;' C'=3;' D'=4;' E'=5;' X'=0;", as.factor.result=FALSE))
+FinalData$kiswahili_grade_numeric <- as.numeric(recode(FinalData$kiswahili_grade, "' A'=1; ' B'=2;' C'=3;' D'=4;' E'=5;' X'=0;", as.factor.result=FALSE))
+FinalData$maarifa_grade_numeric <- as.numeric(recode(FinalData$maarifa_grade, "' A'=1; ' B'=2;' C'=3;' D'=4;' E'=5;' X'=0;", as.factor.result=FALSE))
+FinalData$hisabati_grade_numeric <- as.numeric(recode(FinalData$hisabati_grade, "' A'=1; ' B'=2;' C'=3;' D'=4;' E'=5;' X'=0;", as.factor.result=FALSE))
+FinalData$average_grade_numeric <- as.numeric(recode(FinalData$average_grade, "' A'=1; ' B'=2;' C'=3;' D'=4;' E'=5;' X'=0;", as.factor.result=FALSE))
 
-
+class(FinalData$english_grade_numeric)
+table(FinalData$english_grade_numeric, useNA = "always")
 #############################
 # Collapse Data by Identifier
 #############################
@@ -99,7 +108,7 @@ names(SchoolLevel)
 
 #Actually I would prefer simply deleting duplicates as the data is already collapsed but that is up to you (CC)
 #But this also means that all the calculation using student data has to be done before
-SchoolLevel2 <- FinalData %>% distinct(year, Identifier)
+SchoolLevel2 <- FinalData %>% distinct(Identifier)
 SchoolLevel2$student_number <- NULL
 SchoolLevel2$student_sex <- NULL
 SchoolLevel2$student_name <- NULL
@@ -291,3 +300,56 @@ summary(fit7)
 # Interaction
 fit8 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ WS.2014.mean*Bonanza_2014.mean*Schoolproject_happened.mean + student_sex_binary.mean)
 summary(fit8)
+
+##############################
+# Descriptive Christoper (want to test something)
+##############################
+
+# Overall number of students in Kagera and Geita by year
+table(FinalData$Region, FinalData$year, useNA = "always") 
+
+# Add column and sum totals by saving results
+tab = table(FinalData$Region, FinalData$year)
+addmargins(tab)
+
+# Percentage point for the same table
+prop.table(tab)
+
+# Now row percent
+prop.table(tab, 1)
+
+# Column percent 
+prop.table(tab, 2)
+
+# Gender of students only in 2014
+tab <- FinalData %>% 
+  filter(year == 2014)
+
+table(tab$student_sex)
+
+# Students in 2014 with compared to without teacher in workshop
+table(tab$SUM.WORKSHOPS)
+
+# Histogram of student grades englisch in 2014, is 4 actually a good or bad grade?
+hist(tab$english_grade_numeric)
+
+# Histogram only of students with workshop
+tab <- FinalData%>%
+  filter(SUM.WORKSHOPS!=0)
+
+hist(tab$english_grade_numeric)
+
+# T-Test: null hypothesis being that english grades are not different in 
+# 2014, regardless of whether there was a workshop or not
+t.test(english_grade_numeric ~ Schoolproject_happened, data = tab)
+
+# T-Test boys and girls have same grades english 2014 -> null rejected
+t.test(english_grade_numeric ~ student_sex, data = tab)
+
+# Pie charts of gender with at least one workshop
+tab <- FinalData%>%
+  filter(SUM.WORKSHOPS!=0)
+tab <- table(FinalData$student_sex_binary)
+pie(tab)
+
+
