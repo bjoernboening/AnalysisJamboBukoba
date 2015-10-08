@@ -352,4 +352,183 @@ tab <- FinalData%>%
 tab <- table(FinalData$student_sex_binary)
 pie(tab)
 
+####################################
+# Restructure Data for Time Series Analysis
+####################################
 
+# Remove duplicates by year and Identifier
+TimeSeries <- FinalData %>% distinct(Identifier, year)
+
+# Check number of year
+table(TimeSeries$year) # Looks plausible, what is the one in 2015?
+table(TimeSeries$Identifier, TimeSeries$year)
+
+# Set variables that are not used to NULL (drop)
+TimeSeries$student_number <- NULL
+TimeSeries$student_sex <- NULL
+TimeSeries$student_name <- NULL
+TimeSeries$string_grade <- NULL
+TimeSeries$kiswahili_grade <- NULL
+TimeSeries$english_grade <- NULL
+TimeSeries$maarifa_grade <- NULL
+TimeSeries$hisabati_grade <- NULL
+TimeSeries$science_grade <- NULL
+TimeSeries$average_grade <- NULL
+
+# Generate candidates per year variable
+TimeSeries$Candidates <- TimeSeries$X2012_CLEAN_CANDIDATES_2012
+TimeSeries$X2012_CLEAN_CANDIDATES_2012 <- NULL
+
+TimeSeries$Candidates[is.na(TimeSeries$Candidates)] <- TimeSeries$X2013_CLEAN_CANDIDATES_2013[is.na(TimeSeries$Candidates)]
+TimeSeries$X2013_CLEAN_CANDIDATES_2013 <- NULL
+
+TimeSeries$Candidates[is.na(TimeSeries$Candidates)] <- TimeSeries$X2014_CLEAN_CANDIDATES_2014[is.na(TimeSeries$Candidates)]
+TimeSeries$X2014_CLEAN_CANDIDATES_2014 <- NULL
+
+
+# Generate passed per year variable
+TimeSeries$PassedCandidates <- TimeSeries$X2012_NUMBER_OF_STUDENTS_PASSED_.A.C.
+TimeSeries$X2012_NUMBER_OF_STUDENTS_PASSED_.A.C. <- NULL
+
+TimeSeries$PassedCandidates[is.na(TimeSeries$PassedCandidates)] <- TimeSeries$X2013_NUMBER_OF_STUDENTS_PASSED_.A.C.[is.na(TimeSeries$PassedCandidates)]
+TimeSeries$X2013_NUMBER_OF_STUDENTS_PASSED_.A.C. <- NULL
+
+TimeSeries$PassedCandidates[is.na(TimeSeries$PassedCandidates)] <- TimeSeries$X2014_NUMBER_OF_STUDENTS_PASSED_.A.C.[is.na(TimeSeries$PassedCandidates)]
+TimeSeries$X2014_NUMBER_OF_STUDENTS_PASSED_.A.C. <- NULL
+
+table(TimeSeries$PassedCandidates, useNA = "always")
+
+# Generate average grade variables
+TimeSeries$Average_grade <- TimeSeries$X2012_AVERAGE_TOTAL_MARKS_..250._2012
+TimeSeries$X2012_AVERAGE_TOTAL_MARKS_..250._2012 <- NULL
+
+TimeSeries$Average_grade[is.na(TimeSeries$Average_grade)] <- TimeSeries$X2013_AVERAGE_TOTOL_MARKS_..250._2013[is.na(TimeSeries$Average_grade)]
+TimeSeries$X2013_AVERAGE_TOTOL_MARKS_..250._2013 <- NULL
+
+TimeSeries$Average_grade[is.na(TimeSeries$Average_grade)] <- TimeSeries$X2014_AVERAGE_TOTOL_MARKS_..250._2014[is.na(TimeSeries$Average_grade)]
+TimeSeries$X2014_AVERAGE_TOTOL_MARKS_..250._2014 <- NULL
+
+table(TimeSeries$Average_grade, useNA = "always")
+table(TimeSeries$Average_grade, TimeSeries$year, useNA = "always")
+
+TimeSeries$X2013_AVERAGE_TOTOL_MARKS_..250._2012 <- NULL #Stuff not needed anymore
+TimeSeries$X2013_CHANGE_ON_AVERAGE_TOTAL_MARKS_FROM_2012 <- NULL
+TimeSeries$X2014_AVERAGE_TOTOL_MARKS_..250._2013 <- NULL
+TimeSeries$X2014_CHANGE_ON_AVERAGE_TOTAL_MARKS_FROM_2013 <- NULL
+TimeSeries$X2012_AVERAGE_TOTAL_MARKS_..250._2011 <- NULL
+TimeSeries$X2012_CHANGE_ON_AVERAGE_TOTAL_MARKS_FROM_2011 <- NULL
+
+# Generate ranking variable
+TimeSeries$Ranking <- TimeSeries$X2012_RANK_OF_SCHOOL_2012
+TimeSeries$X2012_RANK_OF_SCHOOL_2012 <- NULL
+
+TimeSeries$Ranking[is.na(TimeSeries$Ranking)] <- TimeSeries$X2013_RANK_OF_SCHOOL_2013[is.na(TimeSeries$Ranking)]
+TimeSeries$X2013_RANK_OF_SCHOOL_2013 <- NULL
+
+TimeSeries$Ranking[is.na(TimeSeries$Ranking)] <- TimeSeries$X2014_RANK_OF_SCHOOL_2014[is.na(TimeSeries$Ranking)]
+TimeSeries$X2014_RANK_OF_SCHOOL_2014 <- NULL
+
+table(TimeSeries$Ranking, useNA = "always")
+table(TimeSeries$Ranking, TimeSeries$year, useNA = "always")
+
+TimeSeries$X2013_RANK_OF_SCHOOL_2012 <- NULL
+TimeSeries$X2014_RANK_OF_SCHOOL_2013 <- NULL
+TimeSeries$X2014_RANK_OF_SCHOOL_2013 <- NULL
+
+# Generate Band of Schooles variable
+TimeSeries$Band <- TimeSeries$X2012_BAND_OF_SCHOOL_2012
+TimeSeries$X2012_BAND_OF_SCHOOL_2012 <- NULL
+
+TimeSeries$Band[is.na(TimeSeries$Band)] <- TimeSeries$X2013_BAND_OF_SCHOOL_2013[is.na(TimeSeries$Band)]
+TimeSeries$X2013_BAND_OF_SCHOOL_2013 <- NULL
+
+TimeSeries$Band[is.na(TimeSeries$Band)] <- TimeSeries$X2014_BAND_OF_SCHOOL_2014[is.na(TimeSeries$Band)]
+TimeSeries$X2014_BAND_OF_SCHOOL_2014 <- NULL
+
+table(TimeSeries$Band, useNA = "always")
+table(TimeSeries$Band, TimeSeries$year, useNA = "always")
+
+TimeSeries$X2013_BAND_OF_SCHOOL_2012 <- NULL # Other stuff not needed
+TimeSeries$X2013_BAND_OF_SCHOOL_2012 <- NULL
+TimeSeries$X2014_BAND_OF_SCHOOL_2013 <- NULL
+
+# With the schoolprojects it gets more complicated. The easist is to merge them new, before that drop old
+TimeSeries$Schoolproject_description <- NULL
+TimeSeries$Schoolprojects_Students_Total <- NULL
+TimeSeries$Schoolprojects_Boys <- NULL
+TimeSeries$Schoolprojects_Girls <- NULL
+TimeSeries$Schoolproject_happened <- NULL
+
+SchoolprojectsTimeSeries <- read.csv("C:/Users/Christopher/Google Drive/Data Animals/Jambo Bukoba/Data/Merge for Time Series/20151008_Schoolprojects_TimeSeries (CC).csv", stringsAsFactors = FALSE, header = TRUE, sep=";")
+SchoolprojectsTimeSeries$Identifier <- toupper(SchoolprojectsTimeSeries$Identifier)
+TimeSeries <- join(TimeSeries, SchoolprojectsTimeSeries, by= c("Identifier", "year"), type ="full")
+TimeSeries$Schoolprojects_happened[is.na(TimeSeries$Schoolprojects_happened)] <- 0
+table(TimeSeries$Schoolprojects_happened, useNA = "always")
+
+# Same thing with the Bonanzas
+TimeSeries$Bonanza_sum <- NULL
+TimeSeries$Bonanza_2012 <- NULL
+TimeSeries$Bonanza_2013 <- NULL
+TimeSeries$Bonanza_2014 <- NULL
+
+BonanzasTimeSeries <- read.csv("C:/Users/Christopher/Google Drive/Data Animals/Jambo Bukoba/Data/Merge for Time Series/20151008_Bonanzas_TimeSeries (CC).csv", stringsAsFactors = FALSE, header = TRUE, sep=";")
+BonanzasTimeSeries$Identifier <- toupper(BonanzasTimeSeries$Identifier)
+TimeSeries <- join(TimeSeries, BonanzasTimeSeries, by= c("Identifier", "year"), type ="full")
+TimeSeries$Bonanza_happened[is.na(TimeSeries$Bonanza_happened)] <- 0
+table(TimeSeries$Bonanza_happened, useNA = "always")
+
+# And finally for workshop
+TimeSeries$WS1 <- NULL
+TimeSeries$WS2 <- NULL
+TimeSeries$WS3 <- NULL
+TimeSeries$WS4 <- NULL
+TimeSeries$WS5 <- NULL
+TimeSeries$WS6 <- NULL
+TimeSeries$WS7 <- NULL
+TimeSeries$WS8 <- NULL
+TimeSeries$WS9 <- NULL
+TimeSeries$WS10 <- NULL
+TimeSeries$WS11 <- NULL
+TimeSeries$WS12 <- NULL
+TimeSeries$WS13 <- NULL
+TimeSeries$WS14 <- NULL
+TimeSeries$WS15 <- NULL
+TimeSeries$WS16 <- NULL
+TimeSeries$WS17 <- NULL
+TimeSeries$WS18 <- NULL
+TimeSeries$WS19 <- NULL
+TimeSeries$WS20 <- NULL
+TimeSeries$WS21 <- NULL
+TimeSeries$WS22 <- NULL
+TimeSeries$WS23 <- NULL
+TimeSeries$WS24 <- NULL
+TimeSeries$WS25 <- NULL
+TimeSeries$WS26 <- NULL
+TimeSeries$WS27 <- NULL
+TimeSeries$WS28 <- NULL
+TimeSeries$WS29 <- NULL
+TimeSeries$WS30 <- NULL
+TimeSeries$WS31 <- NULL
+TimeSeries$WS32 <- NULL
+TimeSeries$WS33 <- NULL
+TimeSeries$WS.2010 <- NULL
+TimeSeries$WS.2011 <- NULL
+TimeSeries$WS.2012 <- NULL
+TimeSeries$WS.2013 <- NULL
+TimeSeries$WS.2014 <- NULL
+TimeSeries$WS.2015 <- NULL
+
+
+WorkshopTimeSeries <- read.csv("C:/Users/Christopher/Google Drive/Data Animals/Jambo Bukoba/Data/Merge for Time Series/20151008_Workshops_TimeSeries (CC).csv", stringsAsFactors = FALSE, header = TRUE, sep=";")
+WorkshopTimeSeries$Identifier <- toupper(WorkshopTimeSeries$Identifier)
+TimeSeries <- join(TimeSeries, WorkshopTimeSeries, by= c("Identifier", "year"), type ="full")
+TimeSeries$Workshop_happened[is.na(TimeSeries$Workshop_happened)] <- 0
+table(TimeSeries$Workshop_happened, useNA = "always")
+
+# Time series done
+
+############################################################
+# Analysis time series data
+############################################################
+
+#More to come
