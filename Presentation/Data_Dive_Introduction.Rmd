@@ -5,6 +5,9 @@ date: "8. Oktober 2015"
 output: 
   ioslides_presentation:
     logo: logo.png
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
 ---
 
 ```{r echo=FALSE, include=FALSE}
