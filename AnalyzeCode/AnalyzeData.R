@@ -16,9 +16,9 @@ library(psych)
 library(magrittr)
 library(graphics)
 ### Set working directory, put an # in front of the ones you don't need
-setwd("C:/Users/Christopher/Google Drive/Data Animals/Jambo Bukoba/Data/Final data") #Christopher's directory
+#setwd("C:/Users/Christopher/Google Drive/Data Animals/Jambo Bukoba/Data/Final data") #Christopher's directory
 # XXX #Ben's directory 
-# setwd("C:/Users/Benji/Desktop/Statistics/Project/JB/Change/AnalysisJamboBukoba")
+setwd("C:/Users/Benji/Desktop/Statistics/Project/JB/Change/AnalysisJamboBukoba")
 # XXX #Dani's directory
 # XXX #Bjoern's directory
 # XXX #Laurence's directory
@@ -138,60 +138,39 @@ SchoolLevel2$average_grade <- NULL
 # Descriptive statistics
 #############################
 
+## Uses FinalData. Shows number of Schoolprojects that have occured. We have only 1.8 % of cases where this is the cases in the uncollapsed data.
 mytable <- table(FinalData$Schoolproject_happened) # tab 
 prop.table(mytable)
 pie(mytable)
-mytable2 <- table(FinalData$Schoolproject_happened, FinalData$year) #crosstab
-prop.table(mytable2)
-mean(FinalData$Schoolproject_happened) # Mean
-
-mytable3 <- table(FinalData$student_sex_binary)
-pie(mytable3)
-
-mytable4 <- table(SUM.WORKSHOPS)
-prop.table(mytable4)
-margin.table(mytable4)
-table(SUM.WORKSHOPS)
-
-#Projects
-names(FinalData)
-table(FinalData$Schoolproject_happened)
-project <- table(FinalData$Schoolproject_happened)
-prop.table(project)
+## Uses SchoolLevel. Shows the same but for collapsed data -> shows us that actually only 1 % of schools affected
 table(SchoolLevel$Schoolproject_happened)
 project2 <- table(SchoolLevel$Schoolproject_happened)
 prop.table(project2)
 
-#Male/Female ratio
+
+## Uses FinalData. the same as before but now with cross tabulation. Shows us that they have all happened between 2013 and 2014
+mytable2 <- table(FinalData$Schoolproject_happened, FinalData$year) #crosstab
+prop.table(mytable2)
+
+#include in presentation# Uses FinalData. shows the distrubtion of sex. We have 52.2 % females -> looks like a normal distribution. Good. 
 table(FinalData$student_sex)
 MaleFemale <- table(FinalData$student_sex)
 prop.table(MaleFemale)
-#table(SchoolLevel$student_sex)
-#MaleFemale2 <- table(SchoolLevel$student_sex)
-#prop.table(MaleFemale2)
+#include in presentation# Uses SchoolLevel. Shows ultimately that there are clases with up to 76 % female students and classes with 0 % female students.
+MaleFemale2 <- table(SchoolLevel$student_sex)
+prop.table(MaleFemale2)
 summary(SchoolLevel$student_sex)
 
-#Schools: School mit mind. einem WS
-#table(FinalData$SUM.WORKSHOPS)
-#SchoolsWS <- table(FinalData$SUM.WORKSHOPS)
-#prop.table(SchoolsWS)
+#include in presentation# shows the amount of workshops. There are a total of 134584 or 35.8 % students affected. Good. It also shows the distribution of 1, 2 and 3 workshops affecting students
+mytable4 <- table(SUM.WORKSHOPS)
+prop.table(mytable4)
+table(SUM.WORKSHOPS)
+margin.table(mytable4)
+#include in presentation# uses SchoolLevel. Shows that there are 31.1 % schools affected.
 table(SchoolLevel$SUM.WORKSHOPS)
 SchoolsWS <- table(SchoolLevel$SUM.WORKSHOPS)
 prop.table(SchoolsWS)
-
-pie(MaleFemale)
 pie(SchoolsWS)
-pie(mytable)
-pie(mytable2)
-pie(mytable4)
-pie(project)
-pie(project2)
-
-
-#Well this is more fancy stuff. It groups the FinalData thesis by year and summarises the number of workshops (hopefully, results not checked)
-pie1 <- FinalData %>% group_by(year) %>% summarise(sum(SUM.WORKSHOPS))
-pie(pie1$`sum(SUM.WORKSHOPS)`, labels=pie1$year)
-
 
 #############################
 # Inferential statistics
@@ -203,27 +182,27 @@ pie(pie1$`sum(SUM.WORKSHOPS)`, labels=pie1$year)
 
 #Workshop#
 #myts <- ts(SchoolLevel$SUM.WORKSHOPS.mean, start=c(2010, 1), end=c(2015, 1), frequency=1)
-attach(SchoolLevel)
-names(SchoolLevel)
-X2013_RANK_OF_SCHOOL_2013.mean  
-summary(X2013_RANK_OF_SCHOOL_2013.mean )
+#attach(SchoolLevel)
+#names(SchoolLevel)
+#X2013_RANK_OF_SCHOOL_2013.mean  
+#summary(X2013_RANK_OF_SCHOOL_2013.mean )
 
 # Workshops -> Result: not significant; other years have problem: e.g. WS.2013.mean = NA in regression for Av.TotalMarks 2013
-fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean)
-summary(fit1)
-fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + student_sex_binary.mean)
-summary(fit1)
-fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + student_sex_binary.mean)
-summary(fit1)
-fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + student_sex_binary.mean)
-summary(fit1)
-fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + WS.2011.mean + student_sex_binary.mean)
-summary(fit1)
-fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2012.mean + student_sex_binary.mean)
-summary(fit1)
-fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + WS.2011.mean + WS.2010.mean + student_sex_binary.mean)
-summary(fit1)
-summary(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean)
+#fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean)
+#summary(fit1)
+#fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + student_sex_binary.mean)
+#summary(fit1)
+#fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + student_sex_binary.mean)
+#summary(fit1)
+#fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + student_sex_binary.mean)
+#summary(fit1)
+#fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + WS.2011.mean + student_sex_binary.mean)
+#summary(fit1)
+#fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2012.mean + student_sex_binary.mean)
+#summary(fit1)
+#fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + WS.2011.mean + WS.2010.mean + student_sex_binary.mean)
+#summary(fit1)
+#summary(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean)
 
 #fit <- lm(X2013_AVERAGE_TOTOL_MARKS_..250._2013.mean ~ WS.2013.mean)
 #summary(fit)
@@ -231,26 +210,26 @@ summary(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean)
 #summary(fit)
 
 # Bonanza -> Result: ??? -> problem with NAs in Bonanza2014
-summary(Bonanza_2013.mean)
-Bonanza_2013.mean[is.na(Bonanza_2013.mean)] <- 0
-fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2013.mean + student_sex_binary.mean)
-summary(fit2)
-fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2014.mean + student_sex_binary.mean)
-summary(fit2)
-fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2014.mean + Bonanza_2013.mean + student_sex_binary.mean)
-summary(fit2)
-fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2014.mean + Bonanza_2013.mean + Bonanza_2012.mean + student_sex_binary.mean)
-summary(fit2)
+#summary(Bonanza_2013.mean)
+#Bonanza_2013.mean[is.na(Bonanza_2013.mean)] <- 0
+#fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2013.mean + student_sex_binary.mean)
+#summary(fit2)
+#fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2014.mean + student_sex_binary.mean)
+#summary(fit2)
+#fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2014.mean + Bonanza_2013.mean + student_sex_binary.mean)
+#summary(fit2)
+#fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2014.mean + Bonanza_2013.mean + Bonanza_2012.mean + student_sex_binary.mean)
+#summary(fit2)
 
 # School Projects
-fit3 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Schoolproject_happened.mean)
-summary(fit3)
-fit3 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Schoolproject_happened.mean + student_sex_binary.mean)
-summary(fit3)
+#fit3 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Schoolproject_happened.mean)
+#summary(fit3)
+#fit3 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Schoolproject_happened.mean + student_sex_binary.mean)
+#summary(fit3)
 
 # Interaction
-fit4 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean*Bonanza_2014.mean*Schoolproject_happened.mean + student_sex_binary.mean)
-summary(fit4)
+#fit4 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean*Bonanza_2014.mean*Schoolproject_happened.mean + student_sex_binary.mean)
+#summary(fit4)
 
 #############################
 # Y2i,t: PassRatio.year.mean
@@ -260,21 +239,21 @@ summary(fit4)
 # Y3i,t: Rank.year.mean
 ############################# 
 
-X2013_RANK_OF_SCHOOL_2013.mean  
+#X2013_RANK_OF_SCHOOL_2013.mean  
 
 # Workshops 
-fit5 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ WS.2014.mean)
-summary(fit5)
-fit5 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ WS.2014.mean + student_sex_binary.mean)
-summary(fit5)
-fit5 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ WS.2014.mean + WS.2013.mean + student_sex_binary.mean)
-summary(fit5)
-fit5 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + student_sex_binary.mean)
-summary(fit5)
-fit5 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + WS.2011.mean + student_sex_binary.mean)
-summary(fit5)
-fit5 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + WS.2011.mean + WS.2010.mean + student_sex_binary.mean)
-summary(fit5)
+#fit5 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ WS.2014.mean)
+#summary(fit5)
+#fit5 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ WS.2014.mean + student_sex_binary.mean)
+#summary(fit5)
+#fit5 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ WS.2014.mean + WS.2013.mean + student_sex_binary.mean)
+#summary(fit5)
+#fit5 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + student_sex_binary.mean)
+#summary(fit5)
+#fit5 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + WS.2011.mean + student_sex_binary.mean)
+#summary(fit5)
+#fit5 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + WS.2011.mean + WS.2010.mean + student_sex_binary.mean)
+#summary(fit5)#
 
 #fit <- lm(X2013_RANK_OF_SCHOOL_2013.mean ~ WS.2013.mean)
 #summary(fit)
@@ -282,24 +261,24 @@ summary(fit5)
 #summary(fit)
 
 # Bonanza -> Result: 
-fit6 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ Bonanza_2014.mean)
-summary(fit6)
-fit6 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ Bonanza_2014.mean + student_sex_binary.mean)
-summary(fit6)
-fit6 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ Bonanza_2014.mean + Bonanza_2013.mean + student_sex_binary.mean)
-summary(fit6)
-fit6 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ Bonanza_2014.mean + Bonanza_2013.mean + Bonanza_2012.mean + student_sex_binary.mean)
-summary(fit6)
+#fit6 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ Bonanza_2014.mean)
+#summary(fit6)
+#fit6 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ Bonanza_2014.mean + student_sex_binary.mean)
+#summary(fit6)
+#fit6 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ Bonanza_2014.mean + Bonanza_2013.mean + student_sex_binary.mean)
+#summary(fit6)
+#fit6 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ Bonanza_2014.mean + Bonanza_2013.mean + Bonanza_2012.mean + student_sex_binary.mean)
+#summary(fit6)
 
 # School Projects
-fit7 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ Schoolproject_happened.mean)
-summary(fit7)
-fit7 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ Schoolproject_happened.mean + student_sex_binary.mean)
-summary(fit7)
+#fit7 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ Schoolproject_happened.mean)
+#summary(fit7)
+#fit7 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ Schoolproject_happened.mean + student_sex_binary.mean)
+#summary(fit7)
 
 # Interaction
-fit8 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ WS.2014.mean*Bonanza_2014.mean*Schoolproject_happened.mean + student_sex_binary.mean)
-summary(fit8)
+#fit8 <- lm(X2014_RANK_OF_SCHOOL_2014.mean ~ WS.2014.mean*Bonanza_2014.mean*Schoolproject_happened.mean + student_sex_binary.mean)
+#summary(fit8)
 
 ##############################
 # Descriptive Christoper (want to test something)
