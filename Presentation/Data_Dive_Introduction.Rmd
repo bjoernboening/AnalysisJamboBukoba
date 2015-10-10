@@ -8,6 +8,7 @@ output:
     fig_width: 7
     fig_height: 6
     fig_caption: true
+bibliography:bibtex database
 ---
 
 ```{r echo=FALSE, include=FALSE}
