@@ -1,0 +1,50 @@
+---
+title: "Data Dive Introduction"
+author: "Björn Boening"
+date: "8. Oktober 2015"
+output: 
+  ioslides_presentation:
+    logo: logo.png
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
+bibliography:bibtex database
+---
+
+```{r echo=FALSE, include=FALSE}
+try(setwd("C:/Users/Christopher/Google Drive/Analyse Jambo Bukoba/AnalysisJamboBukoba"), silent = TRUE)
+source("AnalyzeCode/AnalyzeData.R")
+```
+
+## R Markdown
+
+This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+## Slide with Bullets
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+## Slide with R Code and Output
+
+```{r}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+## Jambo Bukoba slide one - PieChart of students reached in 2014 by gender (just for testing) (CC)
+
+```{r, echo=FALSE}
+tab <- FinalData%>%
+  filter(SUM.WORKSHOPS!=0)
+tab <- table(FinalData$student_sex_binary)
+pie(tab)
+```
