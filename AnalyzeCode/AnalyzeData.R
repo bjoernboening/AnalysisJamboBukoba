@@ -101,6 +101,8 @@ FinalData$average_grade_numeric <- as.numeric(recode(FinalData$average_grade, "'
 # Check if successful
 table(FinalData$english_grade, FinalData$english_grade_numeric, useNA = "always")
 
+# Save 
+write.csv(FinalData, "Final Data cleaned.csv")
 ############################################################
 # Generate school level and time series data
 ############################################################
