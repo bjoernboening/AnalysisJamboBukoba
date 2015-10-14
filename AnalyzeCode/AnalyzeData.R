@@ -18,14 +18,15 @@ library(graphics)
 ### Set working directory, put an # in front of the ones you don't need
 #setwd("C:/Users/Christopher/Google Drive/Data Animals/Jambo Bukoba/Data/Final data") #Christopher's directory
 # XXX #Ben's directory 
-setwd("C:/Users/Benji/Desktop/Statistics/Project/JB/Change/AnalysisJamboBukoba")
+#setwd("C:/Users/Benji/Desktop/Statistics/Project/JB/Change/AnalysisJamboBukoba")
 # XXX #Dani's directory
+setwd("C:/Users/Dani/Documents/Data_Animals/Jambo_Bukoba/FinalData")
 # XXX #Bjoern's directory
 # XXX #Laurence's directory
 
 
 ### Load CSV file
-FinalData <- read.csv("Final Data.csv", stringsAsFactors = FALSE, header = TRUE, sep=";") # Import with no header
+FinalData <- read.csv("FinalData.csv", stringsAsFactors = FALSE, header = TRUE, sep=";") # Import with no header
 attach(FinalData)
 
 ###############################
@@ -46,6 +47,7 @@ FinalData$Bonanza_2012[is.na(FinalData$Bonanza_2012)] <- 0
 FinalData$Bonanza_2013[is.na(FinalData$Bonanza_2013)] <- 0
 FinalData$Bonanza_2014[is.na(FinalData$Bonanza_2014)] <- 0
 FinalData$SUM.WORKSHOPS[is.na(FinalData$SUM.WORKSHOPS)] <- 0
+FinalData$WS.2010[is.na(FinalData$WS.2010)] <- 0
 
 # Also of course male and female to 0 and 1, 0 being female
 FinalData$student_sex_binary <- recode(FinalData$student_sex, "'M'=1; 'F'=0;", as.factor.result=FALSE)
@@ -147,7 +149,6 @@ table(SchoolLevel$Schoolproject_happened)
 project2 <- table(SchoolLevel$Schoolproject_happened)
 prop.table(project2)
 
-
 ## Uses FinalData. the same as before but now with cross tabulation. Shows us that they have all happened between 2013 and 2014
 mytable2 <- table(FinalData$Schoolproject_happened, FinalData$year) #crosstab
 prop.table(mytable2)
@@ -181,59 +182,157 @@ pie(SchoolsWS)
 #############################
 
 #Workshop#
-#myts <- ts(SchoolLevel$SUM.WORKSHOPS.mean, start=c(2010, 1), end=c(2015, 1), frequency=1)
-#attach(SchoolLevel)
-#names(SchoolLevel)
-#X2013_RANK_OF_SCHOOL_2013.mean  
-#summary(X2013_RANK_OF_SCHOOL_2013.mean )
+myts <- ts(SchoolLevel$SUM.WORKSHOPS.mean, start=c(2010, 1), end=c(2015, 1), frequency=1)
+attach(SchoolLevel)
+names(SchoolLevel)
+X2013_RANK_OF_SCHOOL_2013.mean  
+summary(X2013_RANK_OF_SCHOOL_2013.mean )
 
-# Workshops -> Result: not significant; other years have problem: e.g. WS.2013.mean = NA in regression for Av.TotalMarks 2013
-#fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean)
-#summary(fit1)
-#fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + student_sex_binary.mean)
-#summary(fit1)
-#fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + student_sex_binary.mean)
-#summary(fit1)
-#fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + student_sex_binary.mean)
-#summary(fit1)
-#fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + WS.2011.mean + student_sex_binary.mean)
-#summary(fit1)
-#fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2012.mean + student_sex_binary.mean)
-#summary(fit1)
-#fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + WS.2011.mean + WS.2010.mean + student_sex_binary.mean)
-#summary(fit1)
-#summary(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean)
+#Workshops -> Result: not significant; other years have problem: e.g. WS.2013.mean = NA in regression for Av.TotalMarks 2013
+fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean)
+summary(fit1)
+fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + student_sex_binary.mean)
+summary(fit1)
+fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + student_sex_binary.mean)
+summary(fit1)
+fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + student_sex_binary.mean)
+summary(fit1)
+fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + WS.2011.mean + student_sex_binary.mean)
+summary(fit1)
+fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2012.mean + student_sex_binary.mean)
+summary(fit1)
+fit1 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean + WS.2013.mean + WS.2012.mean + WS.2011.mean + WS.2010.mean + student_sex_binary.mean)
+summary(fit1)
+summary(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean)
+# --> except for WS.2012.mean, which is stat.sig. at 5%, no WS is stat. sig.
+# --> WS.2011.mean thru WS.2013.mean have a neg. impact
+# --> Sex of student is stat.sig. at 0.1% for all reg. WS.2010.mean displays NA for all reg. 
 
-#fit <- lm(X2013_AVERAGE_TOTOL_MARKS_..250._2013.mean ~ WS.2013.mean)
-#summary(fit)
-#fit <- lm(X2013_AVERAGE_TOTOL_MARKS_..250._2013.mean ~ WS.2013.mean + student_sex_binary.mean)
-#summary(fit)
+fit <- lm(X2013_AVERAGE_TOTOL_MARKS_..250._2013.mean ~ WS.2013.mean)
+summary(fit) # --> WS.2013.mean displays NA
+fit <- lm(X2013_AVERAGE_TOTOL_MARKS_..250._2013.mean ~ WS.2013.mean + student_sex_binary.mean)
+summary(fit)# --> WS.2013.mean NA, student_sex NA for std. err., t-value, and pr.
 
 # Bonanza -> Result: ??? -> problem with NAs in Bonanza2014
-#summary(Bonanza_2013.mean)
-#Bonanza_2013.mean[is.na(Bonanza_2013.mean)] <- 0
-#fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2013.mean + student_sex_binary.mean)
-#summary(fit2)
-#fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2014.mean + student_sex_binary.mean)
-#summary(fit2)
-#fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2014.mean + Bonanza_2013.mean + student_sex_binary.mean)
-#summary(fit2)
-#fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2014.mean + Bonanza_2013.mean + Bonanza_2012.mean + student_sex_binary.mean)
-#summary(fit2)
+summary(Bonanza_2013.mean)
+Bonanza_2013.mean[is.na(Bonanza_2013.mean)] <- 0
+fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2013.mean + student_sex_binary.mean)
+summary(fit2)# --> only student_sex stat.sig.; WS.2012.mean neg.
+fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2014.mean + student_sex_binary.mean)
+summary(fit2)# sex stat.sig.; Bonanza_2014 NA
+fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2014.mean + Bonanza_2013.mean + student_sex_binary.mean)
+summary(fit2)# sex stat.sig. 0.1%; Bonanza_2014 NA; Bonanza_2013 pos. effect no stat.sig. 
+fit2 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Bonanza_2014.mean + Bonanza_2013.mean + Bonanza_2012.mean + student_sex_binary.mean)
+summary(fit2)# --> sex stat.sig. 0.1%; Bonanza_2014 and ..._2012 NA; Bonanza_2013 pos. effect no stat.sig.
 
 # School Projects
-#fit3 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Schoolproject_happened.mean)
-#summary(fit3)
-#fit3 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Schoolproject_happened.mean + student_sex_binary.mean)
-#summary(fit3)
+fit3 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Schoolproject_happened.mean)
+summary(fit3)# --> schoolproject no stat.sig.
+fit3 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ Schoolproject_happened.mean + student_sex_binary.mean)
+summary(fit3)# --> sex stat.sig. 0.1%
 
 # Interaction
-#fit4 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean*Bonanza_2014.mean*Schoolproject_happened.mean + student_sex_binary.mean)
-#summary(fit4)
+fit4 <- lm(X2014_AVERAGE_TOTOL_MARKS_..250._2014.mean ~ WS.2014.mean*Bonanza_2014.mean*Schoolproject_happened.mean + student_sex_binary.mean)
+summary(fit4)
+# --> WS.2014 and schoolproject no stat.sig.
+# --> sex stat.sig. 0.1%
+# --> rest NA
 
 #############################
 # Y2i,t: PassRatio.year.mean
-#############################  
+#############################
+
+#rename old var
+names(SchoolLevel)[31] <- 'PassRatio.2011.mean'
+table(SchoolLevel$PassRatio.2011.mean)
+summary(SchoolLevel$PassRatio.2011.mean)
+
+#create new var
+PassRatio.2012.mean <- SchoolLevel$X2012_NUMBER_OF_STUDENTS_PASSED_.A.C..mean  / SchoolLevel$X2012_CLEAN_CANDIDATES_2012.mean
+summary(PassRatio.2012.mean)
+
+PassRatio.2013.mean <- SchoolLevel$X2013_NUMBER_OF_STUDENTS_PASSED_.A.C..mean / SchoolLevel$X2013_CLEAN_CANDIDATES_2013.mean
+summary(PassRatio.2013.mean)
+
+PassRatio.2014.mean <- SchoolLevel$X2014_NUMBER_OF_STUDENTS_PASSED_.A.C..mean / SchoolLevel$X2014_CLEAN_CANDIDATES_2014.mean
+summary(PassRatio.2014.mean)
+
+#regress
+#PassRatio.2014.mean ~ WS
+fit5 <- lm(PassRatio.2014.mean ~ WS.2010.mean + WS.2011.mean + WS.2012.mean + WS.2013.mean + WS.2014.mean, data=SchoolLevel)
+summary(fit5)# --> WS.2010, .2011, .2013 are stat.sig. 0.1%
+#PassRatio.2014.mean ~ WS and Bonanza
+fit5 <- lm(PassRatio.2014.mean ~ WS.2010.mean + WS.2011.mean + WS.2012.mean + WS.2013.mean + WS.2014.mean + Bonanza_2012.mean + Bonanza_2013.mean + Bonanza_2014.mean, data=SchoolLevel)
+summary(fit5)# --> same as above; Bonanza_2012 stat.sig. 5%; Bonanza_2014 NA 
+#PassRatio.2014.mean ~ WS and Bonanza and Interaction
+fit5 <- lm(PassRatio.2014.mean ~ WS.2010.mean + WS.2011.mean + WS.2012.mean + WS.2013.mean + WS.2014.mean + Bonanza_2012.mean + Bonanza_2013.mean + Bonanza_2014.mean + Bonanza_2012.mean*WS.2012.mean + Bonanza_2013.mean*WS.2013.mean + Bonanza_2014.mean*WS.2014.mean, data=SchoolLevel)
+summary(fit5)
+# --> stat.sig.: WS.2010 1% (neg. coeff.);  WS.2011 0%; WS.2013 5%; WS.2013*Bonanza_2013 0% 
+# --> Bonanza_2014 NA
+# --> WS.2014*Bonanza_2014 NA
+
+#PassRatio.2014.mean ~ WS and Bonanza and Project
+fit5 <- lm(PassRatio.2014.mean ~ WS.2010.mean + WS.2011.mean + WS.2012.mean + WS.2013.mean + WS.2014.mean + Bonanza_2012.mean + Bonanza_2013.mean + Bonanza_2014.mean + Project_2013.mean + Project_2014.mean, data=SchoolLevel)
+summary(fit5)
+# --> stat.sig.: WS.2010 0.1% (neg. coeff.); WS.2011 0%; WS.2013 0.1%; WS.2014 5%; Project_2014 5%
+# --> Bonanza_2014 NA
+
+#PassRatio.2014.mean ~ WS and Bonanza and Project and Interaction
+fit5 <- lm(PassRatio.2014.mean ~ WS.2010.mean + WS.2011.mean + WS.2012.mean + WS.2013.mean + WS.2014.mean + Bonanza_2012.mean + Bonanza_2013.mean + Bonanza_2014.mean + Project_2013.mean + Project_2014.mean + Bonanza_2012.mean*WS.2012.mean + Project_2013.mean*Bonanza_2013.mean*WS.2013.mean + Project_2014.mean*Bonanza_2014.mean*WS.2014.mean, data=SchoolLevel)
+summary(fit5)
+# --> stat.sig.: WS.2010 0.1% (neg. coeff.); WS.2011 0%; WS.2013 5%; WS.2013*Bonanza_2013 0%
+# --> NA: Bonanza_2014; Project_2013; all interactions accordingly
+
+#PassRatio.2013.mean ~ WS
+fit6 <- lm(PassRatio.2013.mean ~ WS.2010.mean + WS.2011.mean + WS.2012.mean + WS.2013.mean, data=SchoolLevel)
+summary(fit6)
+# --> coeff.: all neg.
+# --> stat.sig.: all no
+
+#PassRatio.2013.mean ~ WS and Bonanza
+fit6 <- lm(PassRatio.2013.mean ~ WS.2010.mean + WS.2011.mean + WS.2012.mean + WS.2013.mean + Bonanza_2012.mean + Bonanza_2013.mean, data=SchoolLevel)
+summary(fit6)
+# --> coeff.: WS all neg.; Bonanza all pos.
+# --> stat.sig.: all no
+
+#PassRatio.2013.mean ~ WS and Bonanza and Interaction
+fit6 <- lm(PassRatio.2013.mean ~ WS.2010.mean + WS.2011.mean + WS.2012.mean + WS.2013.mean + Bonanza_2012.mean + Bonanza_2013.mean + Bonanza_2012.mean*WS.2012.mean + Bonanza_2013.mean*WS.2013.mean, data=SchoolLevel)
+summary(fit6)
+# --> all same as above for both points
+# --> interactions coeff. neg.
+
+#PassRatio.2013.mean ~ WS and Bonanza and Project
+fit6 <- lm(PassRatio.2013.mean ~ WS.2010.mean + WS.2011.mean + WS.2012.mean + WS.2013.mean + Bonanza_2012.mean + Bonanza_2013.mean + Project_2013.mean, data=SchoolLevel)
+summary(fit6)
+# --> same, same
+# --> Project_2013 coeff. neg.
+
+#PassRatio.2013.mean ~ WS and Bonanza and Project and Interaction
+fit6 <- lm(PassRatio.2013.mean ~ WS.2010.mean + WS.2011.mean + WS.2012.mean + WS.2013.mean + WS.2014.mean + Bonanza_2012.mean + Bonanza_2013.mean + Bonanza_2014.mean + Project_2013.mean + Project_2014.mean + Bonanza_2012.mean*WS.2012.mean + Project_2013.mean*Bonanza_2013.mean*WS.2013.mean, data=SchoolLevel)
+summary(fit6)
+# --> stat.sig.: all no
+# --> NA: Bonanza_2014; Project_2013; and all interactions accordingly
+
+#PassRatio.2012.mean ~ WS
+fit7 <- lm(PassRatio.2012.mean ~ WS.2010.mean + WS.2011.mean + WS.2012.mean, data=SchoolLevel)
+summary(fit7)
+# --> coeff. and std. error: 0
+# --> t-value: NA
+
+#PassRatio.2012.mean ~ WS and Bonanza
+fit7 <- lm(PassRatio.2012.mean ~ WS.2010.mean + WS.2011.mean + WS.2012.mean + Bonanza_2012.mean, data=SchoolLevel)
+summary(fit7)
+# --> same as above
+
+#PassRatio.2012.mean ~ WS and Bonanza and Interaction
+fit7 <- lm(PassRatio.2012.mean ~ WS.2010.mean + WS.2011.mean + WS.2012.mean + Bonanza_2012.mean + Bonanza_2012.mean*WS.2012.mean, data=SchoolLevel)
+summary(fit7)
+# --> same as above
+
+#PassRatio.2011.mean ~ WS
+fit8 <- lm(PassRatio.2011.mean ~ WS.2010.mean + WS.2011.mean, data=SchoolLevel)
+summary(fit8)
+# --> NA: all
 
 #############################
 # Y3i,t: Rank.year.mean
@@ -281,7 +380,7 @@ pie(SchoolsWS)
 #summary(fit8)
 
 ##############################
-# Descriptive Christoper (want to test something)
+# Descriptive Christopher (want to test something)
 ##############################
 
 # Overall number of students in Kagera and Geita by year
