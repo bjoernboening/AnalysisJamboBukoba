@@ -102,12 +102,16 @@ PSLE2014_RANKING <- rename(PSLE2014_RANKING, schoolcode = X2014_CENTRE_CODE)
 #PSLE2013_IMPROVEMENT <- rename(PSLE2013_IMPROVEMENT, schoolcode = X2013_CENTRE.CODE)
 #PSLE2014_IMPROVEMENT <- rename(PSLE2014_IMPROVEMENT, schoolcode = PS1201.046)
 
+# In 2012 hat schoolcode ein S zuviel
+PSLE2012_RANKING$schoolcode <- str_replace_all(PSLE2012_RANKING$schoolcode, 'S', '')
+
+
 ###### Merging
-MERGED <- join(MASTER, PSLE2013_RANKING, by= c("year", "schoolcode"))
-MERGED <- join(MERGED, PSLE2014_RANKING, by= c("year", "schoolcode"))
-#MERGED <- join(MERGED, PSLE2013_IMPROVEMENT, by= c("year", "schoolcode"))
-#MERGED <- join(MERGED, PSLE2014_IMPROVEMENT, by= c("year", "schoolcode"))
-MERGED <- full_join(MERGED, PSLE2012_RANKING, by= c("year", "schoolcode"), match = "all")
+MERGED <- left_join(MASTER, PSLE2013_RANKING, by= c("schoolcode"))
+MERGED <- left_join(MERGED, PSLE2014_RANKING, by= c("schoolcode"))
+#MERGED <- join(MERGED, PSLE2013_IMPROVEMENT, by= c("schoolcode"))
+#MERGED <- join(MERGED, PSLE2014_IMPROVEMENT, by= c("schoolcode"))
+MERGED <- left_join(MERGED, PSLE2012_RANKING, by= c("schoolcode"))
 
 ###### Save file
 #write.table(MERGED, file = 'Merge/allmerged.csv', sep=";", row.names=TRUE)
@@ -165,12 +169,13 @@ MERGED$Identifier <- str_replace_all(MERGED$Identifier, ' ', '')
 Schoolprojects <- read.csv("MasterMerge/20150921_Schoolprojects only transformation 2.csv", stringsAsFactors = FALSE, header = TRUE, sep=";") # Import with no header
 Schoolprojects$Identifier <- toupper(Schoolprojects$Identifier)
 
+savemerged <- MERGED
+MERGED <- savemerged
 # Use full type so that those which do not match appear at the end
 MERGED <- join(MERGED, Schoolprojects, by= c("Identifier"), type = "full")
-# Alle erfolgreich gemergt
+# 3 nicht geklappt
 
 MERGED$Schoolproject_happened[is.na(MERGED$Schoolproject_happened)] <- 0
-MERGED[] <- lapply(MERGED$Project_2013, Function_NA_0)
 
 # Save if necessary
 #write.table(MERGED, file = "Merge/allmerged.csv", sep=";", row.names=TRUE)
@@ -183,8 +188,7 @@ Bonanzas <- read.csv("MasterMerge/20150921_Bonanzas only transformation 2(CC).cs
 Bonanzas$Identifier <- toupper(Bonanzas$Identifier)
 
 # Use full type so that those which do not match appear at the end
-MERGED <- join(MERGED, Bonanzas, by= c("Identifier"), type = "full")
-
+MERGED <- left_join(MERGED, Bonanzas, by= c("Identifier"), type = "full")
 
 #Safe if necessary
 #write.table(MERGED, file = "Merge/allmerged.csv", sep=";", row.names=TRUE)
@@ -197,6 +201,6 @@ Workshops <- read.csv("MasterMerge/20151002_Workshops only school level (CC).csv
 Workshops$Identifier <- toupper(Workshops$Identifier)
 
 # Use full type so that those which do not match appear at the end
-MERGED <- join(MERGED, Workshops, by= c("Identifier"), type ="full")
+MERGED <- left_join(MERGED, Workshops, by= c("Identifier"), type ="full")
 
 write.table(MERGED, file = "Merge/allmerged.csv", sep=";", row.names=TRUE)
