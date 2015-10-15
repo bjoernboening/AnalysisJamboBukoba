@@ -1,26 +1,35 @@
 ---
-title: "Data Dive Introduction"
-author: "Björn Boening"
+title: "DataDiveIntroduction"
+author: "BjoernBoening"
 date: "8. Oktober 2015"
-output: 
+output:
   ioslides_presentation:
-    logo: logo.png
-    fig_width: 7
+    fig_caption: yes
     fig_height: 6
-    fig_caption: true
-bibliography:bibtex database
+    fig_width: 7
+    logo: logo.png
+  beamer_presentation: default
 ---
+```{r, include=FALSE}
+### Load CSV file
+data <- read.csv("E:/bjoer/Documents/Google Drive/Data Animals/Jambo Bukoba/Data/Final data/Final Data.csv")
 
-```{r echo=FALSE, include=FALSE}
-try(setwd("C:/Users/Christopher/Google Drive/Analyse Jambo Bukoba/AnalysisJamboBukoba"), silent = TRUE)
-source("AnalyzeCode/AnalyzeData.R")
+
+```
+## Test Statistik
+
+```{r echo=FALSE}
+names(data) 
+
 ```
 
-## R Markdown
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## The DataAnimals
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+Welcome to the Berlin Data Dive. 
+
+In the next slides you will learn something about the dataset we have generated. For further questions, feel free to approach one of the present animals at all time or contact us in the web at <http://data-animals.eu>. If you liked our work you can stay in touch with us as well on facebook <http://facebook.com/dataanimals>.
+
 
 ## Slide with Bullets
 
@@ -36,15 +45,12 @@ summary(cars)
 
 ## Slide with Plot
 
-```{r, echo=FALSE}
+```{r echo=FALSE}
 plot(cars)
 ```
 
 ## Jambo Bukoba slide one - PieChart of students reached in 2014 by gender (just for testing) (CC)
 
-```{r, echo=FALSE}
-tab <- FinalData%>%
-  filter(SUM.WORKSHOPS!=0)
-tab <- table(FinalData$student_sex_binary)
-pie(tab)
-```
+
+## test
+two plus two equals `r 2 + 2`
