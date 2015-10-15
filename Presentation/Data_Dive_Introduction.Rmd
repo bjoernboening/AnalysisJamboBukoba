@@ -13,13 +13,13 @@ output:
 
 ```{r echo=FALSE, include=FALSE}
 try(setwd("C:/Users/Christopher/Google Drive/Analyse Jambo Bukoba/AnalysisJamboBukoba"), silent = TRUE)
-source("AnalyzeCode/AnalyzeData.R")
+try(source("AnalyzeCode/AnalyzeData.R"))
 ```
 
 ## Test Statistik
 
 ```{r echo=FALSE}
-names(data) 
+names(FinalData) 
 
 ```
 

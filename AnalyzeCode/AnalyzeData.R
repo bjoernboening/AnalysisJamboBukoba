@@ -101,8 +101,7 @@ FinalData$average_grade_numeric <- as.numeric(recode(FinalData$average_grade, "'
 # Check if successful
 table(FinalData$english_grade, FinalData$english_grade_numeric, useNA = "always")
 
-# Save 
-write.csv(FinalData, "Final Data cleaned.csv")
+ 
 ############################################################
 # Generate school level and time series data
 ############################################################
@@ -135,8 +134,6 @@ SchoolLevel$hisabati_grade <- NULL
 SchoolLevel$science_grade <- NULL
 SchoolLevel$average_grade <- NULL
 
-#Save as csv
-write.csv(SchoolLevel, "School Level.csv")
 
 ###########################################
 # Create time series data
@@ -144,7 +141,7 @@ write.csv(SchoolLevel, "School Level.csv")
 
 # This either (1) loads the time series directly or (2) runs the codes that generate the data. Your choice
 TimeSeries <- read.csv("Time Series.csv") # Option lead
-source("C:/Users/Christopher/Google Drive/Data Animals/Jambo Bukoba/Data/Merge/MergerCode_Christopher Time Series.R")
+#source("C:/Users/Christopher/Google Drive/Analyse Jambo Bukoba/AnalysisJamboBukoba/Merger_Code/MergerCodeTimeSeries.R")
 
 #############################
 # Create DistrictLevel
