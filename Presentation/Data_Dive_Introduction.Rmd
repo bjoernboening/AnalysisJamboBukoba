@@ -11,25 +11,15 @@ output:
   beamer_presentation: default
 ---
 
-```{r echo=FALSE, include=FALSE, }
-try(setwd("C:/Users/Christopher/Google Drive/Analyse Jambo Bukoba/AnalysisJamboBukoba"), silent = TRUE)
-<<<<<<< HEAD
-try(source("AnalyzeCode/AnalyzeData.R"))
-=======
-try(setwd("E:/bjoer/Documents/GitHub/AnalysisJamboBukoba"), silent = TRUE)
-source("AnalyzeCode/AnalyzeData.R")
->>>>>>> origin/master
+```{r echo=FALSE, include=FALSE}
+try(setwd("C:/Users/Christopher/Google Drive/Analyse Jambo Bukoba/AnalysisJamboBukoba/AnalyzeCode"), silent = TRUE)
+try(source("AnalyzeData2.R"))
 ```
 
 ## Test Statistik
 
 ```{r echo=FALSE}
-<<<<<<< HEAD
 names(FinalData) 
-
-=======
-tab(FinalData$student_sex) 
->>>>>>> origin/master
 ```
 
 
