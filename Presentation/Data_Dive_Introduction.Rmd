@@ -11,16 +11,16 @@ output:
   beamer_presentation: default
 ---
 
-```{r echo=FALSE, include=FALSE}
+```{r echo=FALSE, include=FALSE, }
 try(setwd("C:/Users/Christopher/Google Drive/Analyse Jambo Bukoba/AnalysisJamboBukoba"), silent = TRUE)
+try(setwd("E:/bjoer/Documents/GitHub/AnalysisJamboBukoba"), silent = TRUE)
 source("AnalyzeCode/AnalyzeData.R")
 ```
 
 ## Test Statistik
 
 ```{r echo=FALSE}
-names(data) 
-
+tab(FinalData$student_sex) 
 ```
 
 
