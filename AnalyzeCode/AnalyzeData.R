@@ -142,7 +142,6 @@ SchoolLevel$average_grade <- NULL
 
 #Save as csv
 #write.csv(SchoolLevel, "School Level.csv")
-
 ###########################################
 # Create time series data
 ###########################################
