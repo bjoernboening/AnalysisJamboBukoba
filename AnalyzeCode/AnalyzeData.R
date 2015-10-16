@@ -21,6 +21,7 @@ library(graphics)
 try(setwd("C:/Users/Christopher/Google Drive/Data Animals/Jambo Bukoba/Data/Final data"))
 try(setwd("C:/Users/Benji/Desktop/Statistics/Project/JB/Change/AnalysisJamboBukoba"))
 try(setwd("C:/Users/Dani/Documents/Data_Animals/Jambo_Bukoba/FinalData"))
+try(setwd("E:/bjoer/Documents/Google Drive/Data Animals/Jambo Bukoba/Data/Final data"))
 
 ### Load CSV file
 try(FinalData <- read.csv("Final Data.csv", stringsAsFactors = FALSE, header = TRUE, sep=";"))
@@ -144,7 +145,7 @@ SchoolLevel$average_grade <- NULL
 
 # This either (1) loads the time series directly or (2) runs the codes that generate the data. Your choice
 TimeSeries <- read.csv("Time Series.csv") # Option lead
-source("C:/Users/Christopher/Google Drive/Data Animals/Jambo Bukoba/Data/Merge/MergerCode_Christopher Time Series.R")
+#source("C:/Users/Christopher/Google Drive/Data Animals/Jambo Bukoba/Data/Merge/MergerCode_Christopher Time Series.R")
 
 #############################
 # Create DistrictLevel
