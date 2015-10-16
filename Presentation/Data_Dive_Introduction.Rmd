@@ -12,17 +12,22 @@ output:
 ---
 
 ```{r echo=FALSE, include=FALSE}
+source("C:/Users/Christopher/Google Drive/Analyse Jambo Bukoba/AnalysisJamboBukoba/AnalyzeCode/AnalyzeData.R")
 try(source("E:/bjoer/Documents/GitHub/AnalysisJamboBukoba/AnalyzeCode/AnalyzeData.R"))
 ```
 
 ## Test Statistik
 
 ```{r echo=FALSE}
-names(FinalData) 
+names(FinalData)
 ```
 
 
 ## The DataAnimals
+
+```{r echo=FALSE}
+pie(tab)
+```
 
 Welcome to the Berlin Data Dive. 
 
