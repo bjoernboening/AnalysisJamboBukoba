@@ -15,6 +15,8 @@ library(doBy)
 library(psych)
 library(magrittr)
 library(graphics)
+library(ggplot2)
+library(scales)
 
 ### Set working directory, put an # in front of the ones you don't need
 ### Try is a nice function. If the working directy does not exist, it does not prevent your code from running.
@@ -169,9 +171,20 @@ TimeSeries <- read.csv("Time Series.csv") # Option lead
 #######################################################################
 
 ## Uses FinalData. Shows number of Schoolprojects that have occured. We have only 1.8 % of cases where this is the cases in the uncollapsed data.
+
+FinalData$Schoolproject_happened <- factor(FinalData$Schoolproject_happened,
+                    levels = c(0,1),
+                    labels = c("not happened", "happened")) 
 mytable <- table(FinalData$Schoolproject_happened) # tab 
 prop.table(mytable)
-pie(mytable)
+
+lbls <- paste(names(mytable), "\n", mytable, sep="")
+pct <- round(mytable/sum(mytable)*100)
+#lbls <- paste(lbls, pct) # add percents to labels
+lbls <- paste(pct,"%",sep="") # ad % to labels
+pie(mytable, labels = lbls, col=rainbow(length(lbls)),
+    main="Schoolprojects happening\n (percentage)") 
+
 ## Uses SchoolLevel. Shows the same but for collapsed data -> shows us that actually only 1 % of schools affected
 table(SchoolLevel$Schoolproject_happened)
 project2 <- table(SchoolLevel$Schoolproject_happened)
