@@ -178,12 +178,18 @@ FinalData$Schoolproject_happened <- factor(FinalData$Schoolproject_happened,
 mytable <- table(FinalData$Schoolproject_happened) # tab 
 prop.table(mytable)
 
+#Creating the pie chart
 lbls <- paste(names(mytable), "\n", mytable, sep="")
-pct <- round(mytable/sum(mytable)*100)
-#lbls <- paste(lbls, pct) # add percents to labels
+pct <- round(mytable/sum(mytable)*100, 1)
 lbls <- paste(pct,"%",sep="") # ad % to labels
 pie(mytable, labels = lbls, col=rainbow(length(lbls)),
-    main="Schoolprojects happening\n (percentage)") 
+    main="Schoolprojects happened\n (percentage)") 
+legend("topright", c("Not happened","happened"), cex=0.7, fill=rainbow(length(lbls)))
+png("School Projects.png")
+pie(mytable, labels = lbls, col=rainbow(length(lbls)),
+    main="Schoolprojects happened\n (percentage)") 
+legend("topright", c("Not happened","happened"), cex=0.7, fill=rainbow(length(lbls)))
+dev.off()
 
 ## Uses SchoolLevel. Shows the same but for collapsed data -> shows us that actually only 1 % of schools affected
 table(SchoolLevel$Schoolproject_happened)
@@ -195,24 +201,65 @@ mytable2 <- table(FinalData$Schoolproject_happened, FinalData$year) #crosstab
 prop.table(mytable2)
 
 #include in presentation# Uses FinalData. shows the distrubtion of sex. We have 52.2 % females -> looks like a normal distribution. Good. 
+
 table(FinalData$student_sex)
 MaleFemale <- table(FinalData$student_sex)
 prop.table(MaleFemale)
+
+lbls2 <- paste(names(MaleFemale), "\n", MaleFemale, sep="")
+pct2 <- round(MaleFemale/sum(MaleFemale)*100, 1)
+lbls2 <- paste(pct2,"%",sep="") # ad % to labels
+pie(MaleFemale, labels = lbls2, col=rainbow(length(lbls2)),
+    main="Distribution of Sex\n (percentage)") 
+legend("topright", c("Female","Male"), cex=0.8, fill=rainbow(length(lbls2)))
+png("Distribution of Sex.png")
+pie(MaleFemale, labels = lbls2, col=rainbow(length(lbls)),
+    main="Distribution of Sex\n (percentage)") 
+legend("topright", c("Female","Male"), cex=0.8, fill=rainbow(length(lbls2)))
+dev.off()
+
 #include in presentation# Uses SchoolLevel. Shows ultimately that there are clases with up to 76 % female students and classes with 0 % female students.
-MaleFemale2 <- table(SchoolLevel$student_sex)
+MaleFemale2 <- table(SchoolLevelBen$student_sex)
 prop.table(MaleFemale2)
-summary(SchoolLevel$student_sex)
+summary(SchoolLevelBen$student_sex)
+## Chris, your way of merging leaves student_sex_binary only with values of 1.
 
 #include in presentation# shows the amount of workshops. There are a total of 134584 or 35.8 % students affected. Good. It also shows the distribution of 1, 2 and 3 workshops affecting students
+names(FinalData)
 mytable4 <- table(SUM.WORKSHOPS)
 prop.table(mytable4)
 table(SUM.WORKSHOPS)
-margin.table(mytable4)
+pie(mytable4)
+
+lbls3 <- paste(names(mytable4), "\n", mytable4, sep="")
+pct3 <- round(mytable4/sum(mytable4)*100, 1)
+lbls3 <- paste(pct3,"%",sep="") # ad % to labels
+pie(mytable4, labels = lbls3, col=rainbow(length(lbls3)),
+    main="Sum of Workshops\n (percentage)") 
+legend("topright", c("No Workshop","One Workshop","Two Workshops","Three Workshops"), cex=0.55, fill=rainbow(length(lbls3)))
+png("Sum of Workshops.png")
+pie(mytable4, labels = lbls3, col=rainbow(length(lbls3)),
+    main="Sum of Workshops\n (percentage)") 
+legend("topright", c("No Workshop","One Workshop","Two Workshops","Three Workshops"), cex=0.55, fill=rainbow(length(lbls3)))
+dev.off()
+
 #include in presentation# uses SchoolLevel. Shows that there are 31.1 % schools affected.
 table(SchoolLevel$SUM.WORKSHOPS)
 SchoolsWS <- table(SchoolLevel$SUM.WORKSHOPS)
 prop.table(SchoolsWS)
 pie(SchoolsWS)
+
+lbls4 <- paste(names(SchoolsWS), "\n", SchoolsWS, sep="")
+pct4 <- round(SchoolsWS/sum(SchoolsWS)*100, 1)
+lbls4 <- paste(pct4,"%",sep="") # ad % to labels
+pie(SchoolsWS, labels = lbls4, col=rainbow(length(lbls4)),
+    main="Sum of Workshops - School Level\n (percentage)") 
+legend("topright", c("No Workshop","One Workshop","Two Workshops","Three Workshops"), cex=0.55, fill=rainbow(length(lbls3)))
+png("Sum of Workshops - School Level.png")
+pie(SchoolsWS, labels = lbls4, col=rainbow(length(lbls4)),
+    main="Sum of Workshops - School Level\n (percentage)") 
+legend("topright", c("No Workshop","One Workshop","Two Workshops","Three Workshops"), cex=0.55, fill=rainbow(length(lbls3)))
+dev.off()
 
 ############################################################
 # Inferential statistics
