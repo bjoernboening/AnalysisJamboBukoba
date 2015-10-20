@@ -254,12 +254,48 @@ pct4 <- round(SchoolsWS/sum(SchoolsWS)*100, 1)
 lbls4 <- paste(pct4,"%",sep="") # ad % to labels
 pie(SchoolsWS, labels = lbls4, col=rainbow(length(lbls4)),
     main="Sum of Workshops - School Level\n (percentage)") 
-legend("topright", c("No Workshop","One Workshop","Two Workshops","Three Workshops"), cex=0.55, fill=rainbow(length(lbls3)))
+legend("topright", c("No Workshop","One Workshop","Two Workshops","Three Workshops"), cex=0.55, fill=rainbow(length(lbls4)))
 png("Sum of Workshops - School Level.png")
 pie(SchoolsWS, labels = lbls4, col=rainbow(length(lbls4)),
     main="Sum of Workshops - School Level\n (percentage)") 
-legend("topright", c("No Workshop","One Workshop","Two Workshops","Three Workshops"), cex=0.55, fill=rainbow(length(lbls3)))
+legend("topright", c("No Workshop","One Workshop","Two Workshops","Three Workshops"), cex=0.55, fill=rainbow(length(lbls4)))
 dev.off()
+
+##### in presentation
+
+## multiple bar plot - each intervention listed per year
+SchoolLevel$Bonanza_sum <- factor(SchoolLevel$Bonanza_sum,
+                                           levels = c(0,1),
+                                           labels = c("not happened", "happened")) 
+SchoolLevel$SUM.WORKSHOPS <- factor(SchoolLevel$SUM.WORKSHOPS,
+                                  levels = c(0,1,2,3),
+                                  labels = c("not happened", "once", "twice", "three times")) 
+
+
+table(SchoolLevel$Schoolproject_happened, SchoolLevel$year)
+table(SchoolLevel$Bonanza_sum, SchoolLevel$year)
+
+data <- structure(list(W= c(15L, 58L), 
+                       X = c(1L, 2L)), 
+                  .Names = c("2013", "2014"), class = "data.frame", row.names = c(NA, -2L))
+attach(data)
+print(data)
+
+colours <- c("red", "blue")
+barplot(as.matrix(data), main="School Projects and Bonanza happening", ylab = "Numbers", cex.lab = 1.5, cex.main = 1.4, beside=TRUE, col=colours)
+legend("topright", c("School Project", "Bonanza"), cex=1.3, bty="n", fill=colours)
+
+table(SchoolLevel$SUM.WORKSHOPS, SchoolLevel$year)
+
+data2 <- structure(list(W= c(410L, 60L, 10L), 
+                       X = c(6L, 1L, 0L)), 
+                  .Names = c("2013", "2014"), class = "data.frame", row.names = c(NA, -3L))
+attach(data2)
+print(data2)
+
+colours <- c("red", "blue", "green")
+barplot(as.matrix(data2), main="Workshops", ylab = "Numbers", cex.lab = 1.5, cex.main = 1.4, beside=TRUE, col=colours)
+legend("topright", c("Once", "Twice", "Three times"), cex=1.3, bty="n", fill=colours)
 
 ############################################################
 # Inferential statistics
