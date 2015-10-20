@@ -2,10 +2,17 @@
 # Create time series data
 #############################################
 
-library(stringr)
+library(base)
 library(plyr)
 library(dplyr)
-library(zoo)
+library(car)
+library(doBy)
+library(psych)
+library(magrittr)
+library(graphics)
+library(ggplot2)
+library(scales)
+
 
 setwd("C:/Users/Christopher/Google Drive/Data Animals/Jambo Bukoba/Data/")
 ###############################
@@ -157,6 +164,15 @@ table(MERGED$Identifier)
 ###########################################
 # Create time series data
 ###########################################
+
+
+# First add mean variables for which the student level is needed
+# Also of course male and female to 0 and 1, 0 being female
+MERGED$student_sex_binary <- recode(MERGED$student_sex, "'M'=1; 'F'=0;", as.factor.result=FALSE)
+MERGED <- MERGED %>% group_by(Identifier, year) %>%
+  mutate(mean=mean(student_sex_binary))
+hist(MERGED$mean)
+names(MERGED)[names(MERGED)=="mean"] <- "student_sex_mean"
 
 # Remove duplicates by year and Identifier
 TimeSeries <- MERGED %>% distinct(Identifier, year)
@@ -344,4 +360,4 @@ TimeSeries$Workshop_happened[is.na(TimeSeries$Workshop_happened)] <- 0
 table(TimeSeries$Workshop_happened, useNA = "always")
 
 #Save as csv
-write.csv(TimeSeries, "Final Data/Time Series.csv")
+write.csv(TimeSeries, "C:/Users/Christopher/Google Drive/Data Animals/Jambo Bukoba/Data/Final data/Time Series.csv")
