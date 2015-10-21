@@ -94,7 +94,7 @@ names(FinalData)
 names(FinalData)[names(FinalData)=="Schoolname_cleaned"] <- "Schoolname"
 names(FinalData)[names(FinalData)=="Schoolprojects_Description_.of_activities"] <- "Schoolproject_description"
 
-## Irgendwo hat sich eine falsche year varibale eingeschlichen, zuerst droppen und dann die andere richtig bennen
+## Somewhere was a wrong year variable. First drop, then rename
 FinalData$year <- NULL
 names(FinalData)[names(FinalData)=="year.x"] <- "year"
 
@@ -117,7 +117,7 @@ table(FinalData$english_grade, FinalData$english_grade_numeric, useNA = "always"
 # In the end we want to have three datasets.
 # 1. Student level data, bascially the same as FinalData.
 # 2. School level data, in which each school exists only once.
-# 3. Time series data of schools. Which means each school exists once per year.
+# 3. Time series data of schools, which means each school exists once per year.
 
 # First save the existing data as student level data
 StudentLevel <- FinalData
