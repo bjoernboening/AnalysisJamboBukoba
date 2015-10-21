@@ -297,6 +297,21 @@ colours <- c("red", "blue", "green")
 barplot(as.matrix(data2), main="Workshops", ylab = "Numbers", cex.lab = 1.5, cex.main = 1.4, beside=TRUE, col=colours)
 legend("topright", c("Once", "Twice", "Three times"), cex=1.3, bty="n", fill=colours)
 
+
+## histogram student_sex_binary_mean
+
+names(TimeSeries)
+attach(TimeSeries)
+summary(student_sex_mean)
+hist(student_sex_mean, 
+     main="Mean Distribution of Sex per School", 
+     xlab="0 = all female; 1 = all male",
+     border="black", 
+     col="green",
+     xlim=c(0,1),
+     las=1, 
+     breaks=100)
+
 ############################################################
 # Inferential statistics
 ############################################################
