@@ -64,7 +64,9 @@ They include the
 
 Three formats: (1) Student level, (2) School level, (3) Time Series
 
-(2) and (3) being transformation of (1), (1) being most comprehensive.
+With (2) and (3) being transformation of (1).
+
+With (1) being most comprehensive.
 
 Which one to use? Depends on your research ideas. Remember: you can easily transform the data yourself.
 
@@ -87,16 +89,9 @@ pie(MaleFemale, labels = lbls, col = rainbow(length(lbls)), main="Pie Chart of G
 
 
 ## Gender ratio
-Proportion of male and female students per class, 2013 and 2014 (0%-82%). 
+Proportion of male and female students per class 2013/14
 ```{r echo=FALSE}
 hist(TimeSeries$Student_sex_mean, main="Percentage of male student")
-```
-
-## Workshops
-Teachers from how many different schools have participated in workshops?
-```{r echo=FALSE}
-tab <- table(SchoolLevel$SUM.WORKSHOPS)
-tab
 ```
 
 ## Pie charts schools reached overall
@@ -112,12 +107,14 @@ pie(SchoolsWS, labels = lbls4, col=rainbow(length(lbls4)),
 legend("topright", c("No Workshop","One Workshop","Two Workshops","Three Workshops"), cex=0.55, fill=rainbow(length(lbls4)))
 ```
 
-## Average grade of schools, distribution in 2014
+## Average grade of schools 2014
+Range from 0 to 250
 ```{r echo=FALSE}
 hist(SchoolLevel$Average_Marks_2013, main="Average grade 2014")
 ```
 
-## Student's grade distribution Englisch, 2013 and 2014
+## Student's grade Englisch
+Distribution of 2013 and 2015
 ```{r echo=FALSE}
 hist(StudentLevel$english_grade_numeric, main="Grades Englisch")
 ```
@@ -131,6 +128,8 @@ Do you want to familiarize yourself with datasets? Here are simple warm up tasks
 4. Are grades normally distributed?
 5. Are boys better in math and girls better in languages?
 
-## Have fun
+## Have fun {.flexbox .vcenter}
 www.data-animals.eu
+
+![Happy Diving!](http://en.goldstarsdivingcenter.com/images/icons/learn.png)
 
