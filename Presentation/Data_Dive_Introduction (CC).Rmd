@@ -78,7 +78,7 @@ It is cross-sectional data, the unit being the student. Thus, there are **`r nro
 
 ## Gender ratio
 Proportion of male and female students, 2013 and 2014
-```{r echo=FALSE}
+```{r echo=FALSE, fig.width=6, fig.height=4}
 MaleFemale <- table(StudentLevel$student_sex)
 lbls <- c("Female", "Male")
 pct <- round(MaleFemale/sum(MaleFemale)*100)
@@ -90,13 +90,13 @@ pie(MaleFemale, labels = lbls, col = rainbow(length(lbls)), main="Pie Chart of G
 
 ## Gender ratio
 Proportion of male and female students per class 2013/14
-```{r echo=FALSE}
+```{r echo=FALSE, fig.width=6, fig.height=4}
 hist(TimeSeries$Student_sex_mean, main="Percentage of male student")
 ```
 
 ## Pie charts schools reached overall
 In total 31% have at least one teacher who visited a workshop. 
-```{r echo=FALSE}
+```{r echo=FALSE, fig.width=6, fig.height=4}
 SchoolsWS <- table(SchoolLevel$SUM.WORKSHOPS)
 #pie(SchoolsWS)
 lbls4 <- paste(names(SchoolsWS), "\n", SchoolsWS, sep="")
@@ -109,13 +109,13 @@ legend("topright", c("No Workshop","One Workshop","Two Workshops","Three Worksho
 
 ## Average grade of schools 2014
 Range from 0 to 250
-```{r echo=FALSE}
+```{r echo=FALSE, fig.width=6, fig.height=4}
 hist(SchoolLevel$Average_Marks_2013, main="Average grade 2014")
 ```
 
 ## Student's grade Englisch
 Distribution of 2013 and 2015
-```{r echo=FALSE}
+```{r echo=FALSE, fig.width=6, fig.height=4}
 hist(StudentLevel$english_grade_numeric, main="Grades Englisch")
 ```
 
