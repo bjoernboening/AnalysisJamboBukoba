@@ -1,0 +1,139 @@
+---
+title: "Data Dive Intro Slides"
+author: "The DataAnimals"
+date: "23. Oktober 2015"
+output:
+  ioslides_presentation:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    logo: logo.png
+  beamer_presentation: default
+---
+
+```{r echo=FALSE, include=FALSE, cache=TRUE}
+try(setwd("C:/Users/Christopher/Google Drive/Jambo Bukoba Data Dive/Data"))
+StudentLevel <- read.csv("StudentLevel.csv", sep=";")
+SchoolLevel <- read.csv("SchoolLevel.csv", sep=";")
+TimeSeries <- read.csv("TimeSeries.csv", sep=";")
+library(base)
+library(plyr)
+library(dplyr)
+library(car)
+library(doBy)
+library(psych)
+library(magrittr)
+library(graphics)
+library(ggplot2)
+library(scales)
+```
+
+## The DataAnimals
+
+**Welcome to the Berlin Data Dive** 
+
+In the next slides you will get to know us and learn something about the dataset we have compiled for you. For further questions, feel free to approach one of the present animals at any time during the event. 
+
+
+## Who are we?
+
+We are a group of Berlin-based Master's students with a strong background in data analysis and statistics. 
+
+We are a nonprofit with no business interests. Our motivation is to further develop ourselves and our skills beyond textbooks and theories.
+
+## What do we do after the dive?
+
+- Workshops for R, Stata, and Excel
+- Data Analysis
+- Data Visualisation
+
+Want to know more? 
+Browse <http://data-animals.eu>, 
+or find <http://facebook.com/dataanimals>.
+
+## Data Dive
+
+The dataset we compiled contains **`r ncol(StudentLevel)`** variables and **`r nrow(StudentLevel)`** observation in total.
+
+Depending on your desired level of analysis, we provide 3 datasets:
+
+1. Student Level
+2. School Level (transformed from Student Level)
+3. Time Series (transformed from Student Level)
+
+It is cross-sectional time-series data. The intended unit of analysis is the student, although you may want to adapt the level of analysis from student, to school, to district, or region.
+
+## Look at the data
+
+You will find either numeric, string or binary variables.
+```{r echo=FALSE}
+head(StudentLevel[1:3])
+```
+
+## Descriptive Statistics 1 sex ratio
+
+How many female and male students the data consists of? 
+
+```{r echo=FALSE}
+MaleFemale <- table(StudentLevel$student_sex)
+lbls <- c("Female", "Male")
+pct <- round(MaleFemale/sum(MaleFemale)*100)
+lbls <- paste(lbls, pct)
+lbls <- paste(lbls, "%", sep="")
+pie(MaleFemale, labels = lbls, col = rainbow(length(lbls)), main="Pie Chart of Gender")
+```
+
+
+## Gender
+
+How is the sex distribution in class in 2013 and 2014?
+There are classes with up to 82 % females and classes with 0 % females.
+```{r echo=FALSE}
+hist(TimeSeries$Student_sex_mean, main="Percentage of male student")
+```
+
+
+## Workshops
+Teachers from how many schools have participated in workshops?
+
+```{r echo=FALSE}
+tab <- table(SchoolLevel$SUM.WORKSHOPS)
+tab
+```
+
+## Pie charts schools reached overall
+In total 31% of the school had at least one workshop. 
+```{r echo=FALSE}
+SchoolsWS <- table(SchoolLevel$SUM.WORKSHOPS)
+#pie(SchoolsWS)
+lbls4 <- paste(names(SchoolsWS), "\n", SchoolsWS, sep="")
+pct4 <- round(SchoolsWS/sum(SchoolsWS)*100, 1)
+lbls4 <- paste(pct4,"%",sep="") # ad % to labels
+pie(SchoolsWS, labels = lbls4, col=rainbow(length(lbls4)),
+    main="Sum of Workshops - School Level\n (percentage)") 
+legend("topright", c("No Workshop","One Workshop","Two Workshops","Three Workshops"), cex=0.55, fill=rainbow(length(lbls4)))
+```
+
+
+## Average grade distribution in 2014
+```{r echo=FALSE}
+hist(SchoolLevel$Average_Marks_2013, main="Average grade 2014")
+```
+
+## Student's grade distribution Englisch
+```{r echo=FALSE}
+hist(StudentLevel$english_grade_numeric, main="Grades Englisch")
+```
+
+## Warm-up questions
+
+Do you want to familiarize yourself with datasets? Here are simple warm up tasks for you:
+
+1. What is the unique identifier?
+2. How many schools have more female than male students?
+3. How many students did participate in workshops in 2014?
+4. Are grades normally distributed?
+5. Are boys better in math and girls better in languages?
+
+## Backup
+
