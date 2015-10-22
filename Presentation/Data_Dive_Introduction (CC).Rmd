@@ -11,7 +11,7 @@ output:
   beamer_presentation: default
 ---
 
-```{r echo=FALSE, include=FALSE, cache=TRUE}
+```{r echo=FALSE, include=FALSE}
 try(setwd("C:/Users/Christopher/Google Drive/Jambo Bukoba Data Dive/Data"))
 StudentLevel <- read.csv("StudentLevel.csv", sep=";")
 SchoolLevel <- read.csv("SchoolLevel.csv", sep=";")
