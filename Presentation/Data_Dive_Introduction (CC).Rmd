@@ -148,6 +148,15 @@ Do you want to familiarize yourself with datasets? Here are simple warm up tasks
 4. Are grades normally distributed?
 5. Are boys better in math and girls better in languages?
 
+## Links
+[Data on Google Drive](https://drive.google.com/drive/folders/0B3aFaGPDtkwdZ1ZGMnV4N2g4dUk)
+
+[Data on GitHub](https://github.com/ChristopherCosler/DataJamboBukoba)
+
+[Codebooks](https://drive.google.com/folderview?id=0B3X17L5ZOPajX1Q5OU5OMHdSbkE&usp=sharing)
+
+[Hackpad!](https://hackpad.com/Jambo-Bukoba-Dataset-gTEZotNwLQr)
+
 ## Have fun {.flexbox .vcenter}
 www.data-animals.eu
 
