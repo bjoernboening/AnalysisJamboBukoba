@@ -85,7 +85,7 @@ A reduced version of the student level data.
 
 Individual student data is dropped.
 
-Each school in one row, Jambo Bukoba data and aggregated student data bound right.
+Each school in one row, Jambo Bukoba data bound right.
 
 ## Dataset format 3 - Time series
 
