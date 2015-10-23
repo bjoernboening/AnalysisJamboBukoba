@@ -54,7 +54,7 @@ Browse <http://data-animals.eu>,
 
 or find <http://facebook.com/dataanimals>.
 
-## Dataset 1
+## Dataset 
 
 The datasets are merges from four different sources (description of these sources in Hackpad). 
 
@@ -63,7 +63,7 @@ They include the
 - information about their schools (2011 - 2014)
 - Internal Jambo Bukoba data (2010 - 2015)
 
-## Dataset 2
+## Dataset 
 
 Three formats: (1) Student level, (2) School level, (3) Time Series
 
@@ -73,33 +73,32 @@ With (1) being most comprehensive.
 
 Which one to use? Depends on your research ideas. Remember: you can easily transform the data yourself.
 
-## Dataset 3
+## Dataset format 1 - Student level
 
 The (1) student levlel (most comprehensive) dataset we compiled contains **`r ncol(StudentLevel)`** variables and **`r nrow(StudentLevel)`** observation in total.
 
 It is cross-sectional data, the unit being the student. Thus, there are **`r nrow(StudentLevel)`** students who passed their school leaving examinations in 2013 and 2014 in the data, who visited **`r nrow(SchoolLevel)`** different schools.
 
-## Gender ratio
-Proportion of male and female students, 2013 and 2014
-```{r echo=FALSE, fig.width=6, fig.height=4}
-MaleFemale <- table(StudentLevel$student_sex)
-lbls <- c("Female", "Male")
-pct <- round(MaleFemale/sum(MaleFemale)*100)
-lbls <- paste(lbls, pct)
-lbls <- paste(lbls, "%", sep="")
-pie(MaleFemale, labels = lbls, col = rainbow(length(lbls)), main="Pie Chart of Gender")
-```
+## Dataset format 2 - School level
 
+A reduced version of the student level data. 
 
-## Gender ratio
-Proportion of male and female students per class 2013/14
-```{r echo=FALSE, fig.width=6, fig.height=4}
-hist(TimeSeries$Student_sex_mean, main="Percentage of male student")
-```
+Individual student data is dropped.
+
+Each school in one row, Jambo Bukoba data and aggregated student data bound right.
+
+## Dataset format 3 - Time series
+
+School level data as time series.
+
+Each school has one row pear year (2010 to 2015).
+
+School data and Jambo Bukoba bound right.
+
 
 ## Pie charts schools reached overall
 In total 31% have at least one teacher who visited a workshop. 
-```{r echo=FALSE, fig.width=6, fig.height=4}
+```{r echo=FALSE, fig.width=7, fig.height=6}
 SchoolsWS <- table(SchoolLevel$SUM.WORKSHOPS)
 #pie(SchoolsWS)
 lbls4 <- paste(names(SchoolsWS), "\n", SchoolsWS, sep="")
@@ -112,14 +111,32 @@ legend("topright", c("No Workshop","One Workshop","Two Workshops","Three Worksho
 
 ## Average grade of schools 2014
 Range from 0 to 250
-```{r echo=FALSE, fig.width=6, fig.height=4}
+```{r echo=FALSE, fig.width=7, fig.height=5}
 hist(SchoolLevel$Average_Marks_2013, main="Average grade 2014")
 ```
 
-## Student's grade Englisch
+## Students' grades Englisch
 Distribution of 2013 and 2015
-```{r echo=FALSE, fig.width=6, fig.height=4}
+```{r echo=FALSE, fig.width=6, fig.height=5}
 hist(StudentLevel$english_grade_numeric, main="Grades Englisch")
+```
+
+## Gender ratio 1
+Proportion of male and female students, 2013 and 2014
+```{r echo=FALSE, fig.width=6, fig.height=5}
+MaleFemale <- table(StudentLevel$student_sex)
+lbls <- c("Female", "Male")
+pct <- round(MaleFemale/sum(MaleFemale)*100)
+lbls <- paste(lbls, pct)
+lbls <- paste(lbls, "%", sep="")
+pie(MaleFemale, labels = lbls, col = rainbow(length(lbls)), main="Pie Chart of Gender")
+```
+
+
+## Gender ratio 2
+Proportion of male and female students per class 2013/14
+```{r echo=FALSE, fig.width=6, fig.height=5}
+hist(TimeSeries$Student_sex_mean, main="Percentage of male student")
 ```
 
 ## Warm-up questions
