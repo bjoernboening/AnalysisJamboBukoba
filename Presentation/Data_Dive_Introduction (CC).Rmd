@@ -37,9 +37,9 @@ In the next slides you will get to know us and learn something about the dataset
 
 ## Who are we?
 
-We are a group of Berlin-based Master's students with a strong background in data analysis and statistics. 
+We are a group of Berlin-based Master students with a strong background in data analysis and statistics. 
 
-We are a nonprofit with no business interests. Our motivation is to further develop ourselves and our skills beyond textbooks and theories.
+We are a non-profit with no business interests. Our motivation is to further develop ourselves and our skills beyond textbooks and theories.
 
 ## What do we try to do after the dive?
 
@@ -56,18 +56,18 @@ or find <http://facebook.com/dataanimals>.
 
 ## Dataset 
 
-The datasets are merges from four different sources (description of these sources in Hackpad). 
+The datasets are merged from four different sources (description of these sources in Hackpad). 
 
 They include the 
-- individual students names and grades of their school leaving examinations (2013 - 2014)
-- information about their schools (2011 - 2014)
+- Individual student's names and grades of their school leaving examinations (2013 - 2014)
+- Information about their schools (2011 - 2014)
 - Internal Jambo Bukoba data (2010 - 2015)
 
 ## Dataset 
 
 Three formats: (1) Student level, (2) School level, (3) Time Series
 
-With (2) and (3) being transformation of (1).
+With (2) and (3) being transformations of (1).
 
 With (1) being most comprehensive.
 
@@ -85,7 +85,7 @@ A reduced version of the student level data.
 
 Individual student data is dropped.
 
-Each school in one row, Jambo Bukoba data bound right.
+Each school in one row, Jambo Bukoba's data is bound right.
 
 ## Dataset format 3 - Time series
 
@@ -93,7 +93,7 @@ School level data as time series.
 
 Each school has one row pear year (2010 to 2015).
 
-School data and Jambo Bukoba bound right.
+School data and Jambo Bukoba is bound right.
 
 
 ## Pie charts schools reached overall
@@ -142,11 +142,11 @@ hist(TimeSeries$Student_sex_mean, main="Percentage of male student")
 ## Warm-up questions
 Do you want to familiarize yourself with datasets? Here are simple warm up tasks for you:
 
-1. How many schoolprojects are in the dataset? What were the activities?
+1. How many School projects are in the dataset? What were the activities?
 2. How many schools have more female than male students?
 3. How many students did participate in workshops in 2014?
 4. Are grades normally distributed?
-5. Are boys better in math and girls better in languages?
+5. Are boys better in maths and girls better in Swahili?
 
 ## Links
 [Data on Google Drive](https://drive.google.com/drive/folders/0B3aFaGPDtkwdZ1ZGMnV4N2g4dUk)
