@@ -148,6 +148,21 @@ Do you want to familiarize yourself with datasets? Here are simple warm up tasks
 4. Are grades normally distributed?
 5. Are boys better in maths and girls better in Swahili?
 
+## Main questions
+- Does a student whose teacher visited a workshop have better grades than a student that did not?
+
+- Does a student who participated in a Bonanza AND whose teacher visited a workshops have better grades than other students? What about school projects? Does it depend on the kind of project?
+
+- Does the effect differ between boys and girls?
+
+## Main questions 
+- If there is an effect, when does it kick in? How long does it hold? Does it change, weaken, reverse...?
+
+- Are there any identifiable patterns with which Jambo Bukoba appears to choose their teachers? Do only those teachers participate whose students grades are already high?
+
+- Which additional data could be useful for answering these questions? Is there data that Jambo Bukoba could collect at a reasonable price? What external data could be used?
+
+
 ## Links
 [Data on Google Drive](https://drive.google.com/drive/folders/0B3aFaGPDtkwdZ1ZGMnV4N2g4dUk)
 
